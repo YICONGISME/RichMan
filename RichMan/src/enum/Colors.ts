@@ -1,7 +1,7 @@
 //颜色枚举
 
 module Colors {
-    // export const BLACK: number = 0x000000;
+    export const BLACK: number = 0x000000;
     export const DIMGRAY: number = 0x696969;
     export const GRAY: number = 0x808080;
     export const DARKGRAY: number = 0xA9A9A9;
@@ -142,7 +142,7 @@ module Colors {
     export const SLATEBLUE: number = 0x6A5ACD;
     export const MEDIUMSLATEBLUE: number = 0x7B68EE;
     export const colors = [
-        // BLACK,
+        BLACK,
         DIMGRAY,
         GRAY,
         DARKGRAY,

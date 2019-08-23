@@ -277,6 +277,7 @@ var Main = (function (_super) {
         this.retrySound = new egret.Sound();
         this.reviveSound = new egret.Sound();
         this.overSound = new egret.Sound();
+        this.coordinate = new egret.TextField();
     };
     //文本居中函数
     Main.prototype.align_center = function (item, width, align) {
@@ -527,6 +528,14 @@ var Main = (function (_super) {
         var randomRow = Math.floor(Math.random() * (new_level - 1));
         var randomCol = Math.floor(Math.random() * (new_level - 1));
         console.log(randomRow, randomCol);
+        this.coordinate.y = egret.MainContext.instance.stage.stageHeight - 100;
+        this.align_center(this.coordinate, 200, "right");
+        this.coordinate.fontFamily = Font.MICRO_YAHEI;
+        this.coordinate.size = 30;
+        this.coordinate.textColor = 0x000000;
+        this.coordinate.strokeColor = 0xEE9A00;
+        this.coordinate.text = "提示：" + randomRow + "," + randomCol;
+        this.addChild(this.coordinate);
         for (var col = 0; col < new_level; col++) {
             //关卡增加后，格子数组还未增加，因此遍历前先增加
             if (col >= this.grids.length) {

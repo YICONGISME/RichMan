@@ -1,6 +1,6 @@
 {
 	"groups":[{
-			"keys":"bg_png,egret_icon_png,description_json,coin_json,coin_png,shoe-shaped_png,shoe-shaped_json,chest_png,chest_json,bomb_png,bomb_json",
+			"keys":"bg_png,egret_icon_png,description_json,coin_json,coin_png,shoe-shaped_png,shoe-shaped_json,chest_png,chest_json,bomb_png,bomb_json,boss_json,boss_png,player_json,player_png,game_bg_png,failed_bg_png",
 			"name":"preload"
 		}],
 	"resources":[
@@ -58,6 +58,36 @@
 			"name":"bomb_json",
 			"type":"json",
 			"url":"assets/bomb.json"
+		},
+		{
+			"name":"boss_json",
+			"type":"json",
+			"url":"assets/boss.json"
+		},
+		{
+			"name":"boss_png",
+			"type":"image",
+			"url":"assets/boss.png"
+		},
+		{
+			"name":"player_json",
+			"type":"json",
+			"url":"assets/player.json"
+		},
+		{
+			"name":"player_png",
+			"type":"image",
+			"url":"assets/player.png"
+		},
+		{
+			"name":"game_bg_png",
+			"type":"image",
+			"url":"assets/game_bg.png"
+		},
+		{
+			"name":"failed_bg_png",
+			"type":"image",
+			"url":"assets/failed_bg.png"
 		}
 	]
 }

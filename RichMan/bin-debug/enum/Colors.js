@@ -1,7 +1,7 @@
 //颜色枚举
 var Colors;
 (function (Colors) {
-    // export const BLACK: number = 0x000000;
+    Colors.BLACK = 0x000000;
     Colors.DIMGRAY = 0x696969;
     Colors.GRAY = 0x808080;
     Colors.DARKGRAY = 0xA9A9A9;
@@ -142,7 +142,7 @@ var Colors;
     Colors.SLATEBLUE = 0x6A5ACD;
     Colors.MEDIUMSLATEBLUE = 0x7B68EE;
     Colors.colors = [
-        // BLACK,
+        Colors.BLACK,
         Colors.DIMGRAY,
         Colors.GRAY,
         Colors.DARKGRAY,

@@ -108,6 +108,8 @@ class Main extends egret.DisplayObjectContainer {
     private record_level;
     private max_record: egret.TextField;
     private curr_level: egret.TextField;
+    private coordinate: egret.TextField;
+
     private count;
     private videoCount;
     private videoCountDown;
@@ -279,6 +281,8 @@ class Main extends egret.DisplayObjectContainer {
         this.reviveSound = new egret.Sound();
         this.overSound = new egret.Sound();
 
+        this.coordinate = new egret.TextField();
+
 
     }
     //文本居中函数
@@ -374,6 +378,8 @@ class Main extends egret.DisplayObjectContainer {
                 this.time.start();
                 //获取启动时时间
                 this.timeOnStart = egret.getTimer();
+
+                // this.addEventListener(egret.Event.ENTER_FRAME, this.onTimePass, this);
 
             }
         }
@@ -577,7 +583,17 @@ class Main extends egret.DisplayObjectContainer {
 
         let randomRow = Math.floor(Math.random() * (new_level - 1));
         let randomCol = Math.floor(Math.random() * (new_level - 1));
+
         console.log(randomRow, randomCol);
+
+        this.coordinate.y = egret.MainContext.instance.stage.stageHeight- 100;
+        this.align_center(this.coordinate, 200, "right");
+        this.coordinate.fontFamily = Font.MICRO_YAHEI;
+        this.coordinate.size = 30;
+        this.coordinate.textColor = 0x000000;
+        this.coordinate.strokeColor = 0xEE9A00;
+        this.coordinate.text="提示："+randomRow+","+randomCol;
+        this.addChild(this.coordinate);
 
         for (let col = 0; col < new_level; col++) {
             //关卡增加后，格子数组还未增加，因此遍历前先增加
