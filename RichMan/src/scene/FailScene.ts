@@ -21,7 +21,7 @@ class FailScene extends egret.Sprite {
 
         this.game_failed = new egret.TextField();
         this.game_failed.y = 250;
-        Common.getInstance().align_center(this.game_failed, 500, "center");
+        Common.align_center(this.game_failed, 500, "center");
         this.game_failed.fontFamily = Font.MICRO_YAHEI;
         this.game_failed.size = 90;
         this.game_failed.textColor = 0xEE2C2C;
@@ -34,7 +34,7 @@ class FailScene extends egret.Sprite {
         //重试文本
         this.retry = new egret.TextField();
         this.retry.y = 700;
-        Common.getInstance().align_center(this.retry, 100, "left");
+        Common.align_center(this.retry, 100, "left");
         this.retry.fontFamily = Font.MICRO_YAHEI;
         this.retry.size = 50;
         this.retry.textColor = 0xEE9A00;

@@ -19,13 +19,12 @@ class GameController {
     }
     //开始游戏之前
     public gameBefore() {
-
+        this._gameState = GameState.GAME_UNSTART;
         SceneManager.getInstance().toStartScene();
-        this._gameState = 0;
     }
     //点击开始游戏
     public gameStart() {
-        this._gameState = 1;
+        this._gameState = GameState.GAME_PLAYING;
 
         //开始游戏
         SceneManager.getInstance().getGameScene().resetGame();
@@ -35,20 +34,18 @@ class GameController {
     }
     //游戏失败结束
     public gameOver() {
-
+        this._gameState = GameState.GAME_OVER;
         //游戏结束调用失败界面
         SceneManager.getInstance().toFailScene();
         //调用动画停止函数
         SceneManager.getInstance().getGameScene().gameOverStop();
-        this._gameState = 2;
 
     }
     //游戏时间结束
     public gameEnd() {
-
+        this._gameState = GameState.GAME_OVER;
         SceneManager.getInstance().toEndScene();
         SceneManager.getInstance().getGameScene().gameOverStop();
-        this._gameState = 3;
 
     }
 
@@ -60,7 +57,7 @@ class GameController {
         SceneManager.getInstance().getGameScene().resetGame();
         //重新开始调用游戏界面
         SceneManager.getInstance().toGameScene();
-        this._gameState = 1;
+        this._gameState = GameState.GAME_PLAYING;
         //  其他操作
     }
 

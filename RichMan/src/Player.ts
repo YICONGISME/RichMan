@@ -11,7 +11,7 @@ class Player extends egret.Sprite{
 
     private init(){
         //玩家
-        this.player_mc = Common.getInstance().buildTypeMc("player_json", "player_png", "player");
+        this.player_mc = Common.buildTypeMc("player_json", "player_png", "player");
         this.player_mc.anchorOffsetX = this.player_mc.width/2;  //設置縮放的錨點，變化更自然
         this.addChild(this.player_mc);
         this.touchEnabled = true;

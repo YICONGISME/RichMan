@@ -21,7 +21,7 @@ var Boss = (function (_super) {
     }
     Boss.prototype.init = function () {
         //boss
-        this.boss_mc = Common.getInstance().buildTypeMc("boss_json", "boss_png", "boss");
+        this.boss_mc = Common.buildTypeMc("boss_json", "boss_png", "boss");
         this.boss_mc.anchorOffsetX = this.boss_mc.width / 2; //設置縮放的錨點，變化更自然
         this.addChild(this.boss_mc);
         this.stage_width = egret.MainContext.instance.stage.stageWidth;

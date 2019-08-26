@@ -8,7 +8,7 @@
 		"libs/modules/promise/promise.js"
 	],
 	"game": [
-		"bin-debug/enum/Colors.js",
+		"bin-debug/enum/Font.js",
 		"bin-debug/Boss.js",
 		"bin-debug/Jewels.js",
 		"bin-debug/LoadingUI.js",
@@ -17,8 +17,9 @@
 		"bin-debug/Player.js",
 		"bin-debug/controller/GameController.js",
 		"bin-debug/enum/BossType.js",
+		"bin-debug/enum/Colors.js",
 		"bin-debug/Common.js",
-		"bin-debug/enum/Font.js",
+		"bin-debug/enum/GameState.js",
 		"bin-debug/enum/JewelsType.js",
 		"bin-debug/enum/Language.js",
 		"bin-debug/enum/PlayerType.js",

@@ -25,7 +25,7 @@ class StartScene extends egret.Sprite {
 
         //开始游戏文本
         this.startGameText = new egret.TextField();
-        Common.getInstance().align_center(this.startGameText, 500, "center");
+        Common.align_center(this.startGameText, 500, "center");
         this.startGameText.y = egret.MainContext.instance.stage.stageHeight - 200;
         this.startGameText.width = 500;
         this.startGameText.size = 70;
@@ -37,15 +37,15 @@ class StartScene extends egret.Sprite {
         this.startGameText.touchEnabled = true;
         this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startGame, this);
 
-        
 
-        
+
+
     }
-    
+
     //开始游戏侦听函数，通过场景管理器跳转游戏场景
     private startGame(evt: egret.Event) {
         GameController.getInstance().gameStart();
-        
+
     }
 
 

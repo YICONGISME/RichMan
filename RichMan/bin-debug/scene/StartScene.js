@@ -28,7 +28,7 @@ var StartScene = (function (_super) {
         this.addChild(this.start_bg);
         //开始游戏文本
         this.startGameText = new egret.TextField();
-        Common.getInstance().align_center(this.startGameText, 500, "center");
+        Common.align_center(this.startGameText, 500, "center");
         this.startGameText.y = egret.MainContext.instance.stage.stageHeight - 200;
         this.startGameText.width = 500;
         this.startGameText.size = 70;

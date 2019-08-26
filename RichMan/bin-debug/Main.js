@@ -148,8 +148,6 @@ var Main = (function (_super) {
         //只需把管理器容器添加到舞台上来，调用所需的场景方法即可
         this.addChild(SceneManager.getInstance());
         GameController.getInstance().gameBefore();
-        // let endScene = new GameEndScene();
-        // this.addChild(endScene);
     };
     return Main;
 }(egret.DisplayObjectContainer));

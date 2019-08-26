@@ -39,7 +39,7 @@ var GameScene = (function (_super) {
         this.addChild(this.player_mc);
         this.player_score = new egret.TextField();
         this.player_score.textColor = Colors.DARKRED;
-        Common.getInstance().align_center(this.player_score, 150, "right");
+        Common.align_center(this.player_score, 150, "right");
         this.player_score.y = 20;
         this.player_score.size = 40;
         this.player_score.text = "得分0";

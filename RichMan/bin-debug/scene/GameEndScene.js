@@ -24,7 +24,7 @@ var GameEndScene = (function (_super) {
         this.addChild(this.failed_bg);
         this.game_end = new egret.TextField();
         this.game_end.y = 250;
-        Common.getInstance().align_center(this.game_end, 500, "center");
+        Common.align_center(this.game_end, 500, "center");
         this.game_end.fontFamily = Font.MICRO_YAHEI;
         this.game_end.size = 90;
         this.game_end.textColor = 0xEE2C2C;
@@ -35,7 +35,7 @@ var GameEndScene = (function (_super) {
         //得分文本
         this.game_score = new egret.TextField();
         this.game_score.y = 400;
-        Common.getInstance().align_center(this.game_score, 500, "center");
+        Common.align_center(this.game_score, 500, "center");
         this.game_score.fontFamily = Font.MICRO_YAHEI;
         this.game_score.size = 50;
         this.game_score.textColor = Colors.LIGHTYELLOW;
@@ -44,7 +44,7 @@ var GameEndScene = (function (_super) {
         //下一关
         this.next_level = new egret.TextField();
         this.next_level.y = 700;
-        Common.getInstance().align_center(this.next_level, 500, "center");
+        Common.align_center(this.next_level, 500, "center");
         this.next_level.fontFamily = Font.MICRO_YAHEI;
         this.next_level.size = 50;
         this.next_level.textColor = Colors.BLACK;
