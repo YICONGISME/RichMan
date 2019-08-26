@@ -19,7 +19,7 @@ var SceneManager = (function (_super) {
         this.startScene = new StartScene();
         this._gameScene = new GameScene();
         this.failScene = new FailScene();
-        // this.endScene = new GameEndScene();
+        this.endScene = new GameEndScene();
     };
     // 实例化多个管理类会出错，所以创建单例模式
     SceneManager.getInstance = function () {
@@ -30,16 +30,16 @@ var SceneManager = (function (_super) {
     };
     //跳转游戏场景
     SceneManager.prototype.toGameScene = function () {
-        this.addChild(this._gameScene);
         if (this.contains(this.startScene)) {
             this.removeChild(this.startScene);
         }
+        this.addChild(this._gameScene);
         if (this.contains(this.failScene)) {
             this.removeChild(this.failScene);
         }
-        // if (this.contains(this.endScene)) {
-        //     this.removeChild(this.endScene);
-        // }
+        if (this.contains(this.endScene)) {
+            this.removeChild(this.endScene);
+        }
     };
     //跳转开始场景
     SceneManager.prototype.toStartScene = function () {
@@ -51,9 +51,9 @@ var SceneManager = (function (_super) {
         if (this.contains(this.failScene)) {
             this.removeChild(this.failScene);
         }
-        // if (this.contains(this.endScene)) {
-        //     this.removeChild(this.endScene);
-        // }
+        if (this.contains(this.endScene)) {
+            this.removeChild(this.endScene);
+        }
     };
     //跳转失败场景
     SceneManager.prototype.toFailScene = function () {
@@ -65,29 +65,32 @@ var SceneManager = (function (_super) {
             // console.log("remove gamescene");
             this.removeChild(this._gameScene);
         }
-        // if (this.contains(this.endScene)) {
-        //     this.removeChild(this.endScene);
-        // }
+        if (this.contains(this.endScene)) {
+            this.removeChild(this.endScene);
+        }
     };
-    //跳转失败场景
-    // public toEndScene() {
-    //     this.addChild(this.endScene);
-    //     if (this.contains(this.startScene)) {
-    //         this.removeChild(this.startScene);
-    //     }
-    //     if (this.contains(this._gameScene)) {
-    //         console.log("remove failscene");
-    //         this.removeChild(this._gameScene);
-    //     }
-    //     if (this.contains(this.failScene)) {
-    //         this.removeChild(this.failScene);
-    //     }
-    // }
+    //跳转结束场景
+    SceneManager.prototype.toEndScene = function () {
+        this.addChild(this.endScene);
+        if (this.contains(this.startScene)) {
+            this.removeChild(this.startScene);
+        }
+        if (this.contains(this._gameScene)) {
+            console.log("remove failscene");
+            this.removeChild(this._gameScene);
+        }
+        if (this.contains(this.failScene)) {
+            this.removeChild(this.failScene);
+        }
+    };
     SceneManager.prototype.getGameScene = function () {
         return this._gameScene;
     };
     SceneManager.prototype.getFailScene = function () {
         return this.failScene;
+    };
+    SceneManager.prototype.getEndScene = function () {
+        return this.endScene;
     };
     SceneManager.instance = null;
     return SceneManager;

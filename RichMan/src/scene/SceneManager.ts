@@ -15,7 +15,7 @@ class SceneManager extends egret.DisplayObjectContainer {
         this.startScene = new StartScene();
         this._gameScene = new GameScene();
         this.failScene = new FailScene();
-        // this.endScene = new GameEndScene();
+        this.endScene = new GameEndScene();
     }
     // 实例化多个管理类会出错，所以创建单例模式
     public static getInstance() {
@@ -26,19 +26,20 @@ class SceneManager extends egret.DisplayObjectContainer {
     }
     //跳转游戏场景
     public toGameScene() {
-        this.addChild(this._gameScene);
         if (this.contains(this.startScene)) {
             this.removeChild(this.startScene);
 
         }
+        this.addChild(this._gameScene);
+
         if (this.contains(this.failScene)) {
             this.removeChild(this.failScene);
 
         }
-        // if (this.contains(this.endScene)) {
-        //     this.removeChild(this.endScene);
+        if (this.contains(this.endScene)) {
+            this.removeChild(this.endScene);
 
-        // }
+        }
     }
     //跳转开始场景
     public toStartScene() {
@@ -52,10 +53,10 @@ class SceneManager extends egret.DisplayObjectContainer {
             this.removeChild(this.failScene);
 
         }
-        // if (this.contains(this.endScene)) {
-        //     this.removeChild(this.endScene);
+        if (this.contains(this.endScene)) {
+            this.removeChild(this.endScene);
 
-        // }
+        }
     }
     //跳转失败场景
     public toFailScene() {
@@ -70,29 +71,29 @@ class SceneManager extends egret.DisplayObjectContainer {
             this.removeChild(this._gameScene);
 
         }
-        // if (this.contains(this.endScene)) {
-        //     this.removeChild(this.endScene);
+        if (this.contains(this.endScene)) {
+            this.removeChild(this.endScene);
 
-        // }
+        }
     }
-    //跳转失败场景
-    // public toEndScene() {
+    //跳转结束场景
+    public toEndScene() {
 
-    //     this.addChild(this.endScene);
-    //     if (this.contains(this.startScene)) {
-    //         this.removeChild(this.startScene);
+        this.addChild(this.endScene);
+        if (this.contains(this.startScene)) {
+            this.removeChild(this.startScene);
 
-    //     }
-    //     if (this.contains(this._gameScene)) {
-    //         console.log("remove failscene");
-    //         this.removeChild(this._gameScene);
+        }
+        if (this.contains(this._gameScene)) {
+            console.log("remove failscene");
+            this.removeChild(this._gameScene);
 
-    //     }
-    //     if (this.contains(this.failScene)) {
-    //         this.removeChild(this.failScene);
+        }
+        if (this.contains(this.failScene)) {
+            this.removeChild(this.failScene);
 
-    //     }
-    // }
+        }
+    }
     public getGameScene() {
         return this._gameScene;
     }
@@ -100,7 +101,7 @@ class SceneManager extends egret.DisplayObjectContainer {
         return this.failScene;
     }
 
-    // public getEndScene(){
-    //     return this.endScene;
-    // }
+    public getEndScene(){
+        return this.endScene;
+    }
 }
