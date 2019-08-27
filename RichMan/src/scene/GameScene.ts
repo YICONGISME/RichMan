@@ -12,6 +12,7 @@ class GameScene extends egret.Sprite {
     private last_score;
 
     private targetX;    // 移动目标地点
+    private itemsInStage = [];
 
     constructor() {
         super();
@@ -104,24 +105,23 @@ class GameScene extends egret.Sprite {
         // console.log(egret.MainContext.instance.stage.stageWidth);
         // 人物移动
         //如果还没到达目标
-        
+
         if (this.player_mc.x - this.targetX > 0) {
             //当小于速度之后，就让他等于目标
             if (this.player_mc.x - this.targetX < this.player_mc.speed) {
                 this.player_mc.x = this.targetX;
             } else {
-                //否则继续移动
-                if(this.player_mc.x >this.player_mc.width){
+                //否则继续移动，每一帧都增加速度的距离
+                if (this.player_mc.x > this.player_mc.width) {
+                    this.player_mc.x -= this.player_mc.speed;
+                }
 
-                this.player_mc.x -= this.player_mc.speed;
-            }
-               
             }
         } else {
             if (this.targetX - this.player_mc.x < this.player_mc.speed) {
                 this.player_mc.x = this.targetX;
             } else {
-                if(this.player_mc.x < egret.MainContext.instance.stage.stageWidth-this.player_mc.width){
+                if (this.player_mc.x < egret.MainContext.instance.stage.stageWidth - this.player_mc.width) {
                     // this.player_mc.x =  egret.MainContext.instance.stage.stageWidth;
                     this.player_mc.x += this.player_mc.speed;
 
@@ -131,6 +131,75 @@ class GameScene extends egret.Sprite {
         }
         //限制走到屏幕两边就停止
 
+        // 如果 速度出现不一样  那么 有可能后扔的物品 先到地面  所以使用循环 遍历所有的 是否与玩家接触
+        // for() {
+
+        // }
+
+        if (this.itemsInStage.length > 0) {
+            if (this.player_mc.hitTestPoint(this.itemsInStage[0].x, this.itemsInStage[0].y)) {
+                console.log(this.itemsInStage[0].getType());
+                if (this.itemsInStage[0].getType() == 0) {
+                    console.log("die");
+                    //调用失败界面
+
+                    GameController.getInstance().gameOver();
+
+                } else {
+                    console.log('得分');
+
+                    GameController.getInstance().addScore(this.itemsInStage[0].getScore());
+                    this.player_score.text = "得分" + GameController.getInstance().getPlayerScore() + "";
+                    let tip = new egret.TextField();
+                    tip.text = "+" + this.itemsInStage[0].getScore() + "";
+                    tip.y = this.player_mc.y - tip.height;
+                    tip.x = this.player_mc.x - tip.width;
+                    tip.textColor = Colors.DARKORANGE;
+                    this.addChild(tip);
+                    egret.Tween.get(tip).to({ y: tip.y - 20, alpha: 0 }, 500).call(() => {
+                        if (this.contains(tip)) {
+                            this.removeChild(tip);
+                            tip = null;
+                        }
+                    });
+                    if (this.contains(this.itemsInStage[0])) {
+                        this.removeChild(this.itemsInStage[0]);
+                        this.removeItem(this.itemsInStage[0]);
+                    }
+                }
+            }
+        }
+
+
+        // if (Math.abs(this.player_mc.x - item.x) < 50) { // 可配置的 任意值
+        //     //记分牌  得分
+        //     console.log(jewels_type);
+        //     if (jewels_type == 0) {
+        //         console.log("die");
+        //         //调用失败界面
+
+        //         GameController.getInstance().gameOver();
+
+        //     } else {
+        //         console.log('得分');
+        //         GameController.getInstance().addScore(item.getScore());
+        //         this.player_score.text = "得分" + GameController.getInstance().getPlayerScore() + "";
+        //         let tip = new egret.TextField();
+        //         tip.text = "+"+item.getScore()+"";
+        //         tip.y = this.player_mc.y-tip.height;
+        //         tip.x = this.player_mc.x-tip.width;
+        //         tip.textColor = Colors.DARKORANGE;
+        //         this.addChild(tip);
+        //         egret.Tween.get(tip).to({y:tip.y-20,alpha:0},500).call(()=>{
+        //             if(this.contains(tip)){
+        //                 this.removeChild(tip);
+        //                 tip = null;
+        //             }
+        //         });
+
+        //     }
+        // }
+
 
         // return this.count;
     }
@@ -139,60 +208,44 @@ class GameScene extends egret.Sprite {
     //珠宝显示在页面上
     public addJewels(jewels_type = JewelsType.BOMB) {
 
-        if (GameController.getInstance().gameState == 1) {
+        if (GameController.getInstance().gameState == GameState.GAME_PLAYING) {
 
             let item = new Jewels(jewels_type);
             item.x = this.boss_mc.x;
             item.y = 100;
             this.addChild(item);
-            egret.Tween.get(item).to({ y: 800 }, 2000).call(() => {
-                if (Math.abs(this.player_mc.x - item.x) < 50) { // 可配置的 任意值
-                    //记分牌  得分
-                    console.log(jewels_type);
-                    if (jewels_type == 0) {
-                        console.log("die");
-                        //调用失败界面
-
-                        GameController.getInstance().gameOver();
-
-                    } else {
-                        console.log('得分');
-                        GameController.getInstance().addScore(item.getScore());
-                        this.player_score.text = "得分" + GameController.getInstance().getPlayerScore() + "";
-                        let tip = new egret.TextField();
-                        tip.text = "+"+item.getScore()+"";
-                        tip.y = this.player_mc.y-tip.height;
-                        tip.x = this.player_mc.x-tip.width;
-                        tip.textColor = Colors.DARKORANGE;
-                        this.addChild(tip);
-                        egret.Tween.get(tip).to({y:tip.y-20,alpha:0},500).call(()=>{
-                            if(this.contains(tip)){
-                                this.removeChild(tip);
-                                tip = null;
-                            }
-                        });
-
-                    }
-                }
+            this.itemsInStage.push(item);
+            egret.Tween.get(item).to({ y: 850 }, 2000).call(() => {
                 if (this.contains(item)) {
                     this.removeChild(item);
+                    this.removeItem(item);
                 }
             });
         }
-
     }
     //重试函数
     public resetGame() {
         this.countTimeStart = egret.getTimer();
         this.player_score.text = "得分" + GameController.getInstance().getPlayerScore() + "";
-        this.boss_mc.x = 0;
-        this.player_mc.x = egret.MainContext.instance.stage.stageWidth/2;
+        this.player_mc.x = egret.MainContext.instance.stage.stageWidth / 2;
         this.boss_mc.run();
         this.player_mc.run();
         // this.time  重置
         console.log("this.resetgame");
         //在开始时添加侦听事件
         this.addEventListener(egret.TouchEvent.ENTER_FRAME, this.countTime, this);
+        this.clearItems();
+
+    }
+
+    private clearItems() {
+        for (let i = 0; i < this.itemsInStage.length; i++) {
+            if (this.contains(this.itemsInStage[i])) {
+                this.removeChild(this.itemsInStage[i]);
+                this.itemsInStage[i] = null;
+            }
+        }
+        this.itemsInStage = [];
     }
 
     public gameOverStop() {
@@ -206,7 +259,7 @@ class GameScene extends egret.Sprite {
     //触摸点击事件
     private onTouchMove(evt) {
         //evt.stageX鼠标点击的位置
-      
+
         if (evt.stageX > this.player_mc.x) {
             this.player_mc.scaleX = 1;
             this.targetX = 640;
@@ -224,6 +277,11 @@ class GameScene extends egret.Sprite {
         egret.Tween.pauseTweens(evt.target);
     }
 
-
+    private removeItem(item) {
+        let index = this.itemsInStage.indexOf(item);
+        if (index !== -1) {
+            this.itemsInStage.splice(index, 1);
+        }
+    }
 
 }

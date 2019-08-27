@@ -12,6 +12,7 @@ var GameScene = (function (_super) {
     __extends(GameScene, _super);
     function GameScene() {
         var _this = _super.call(this) || this;
+        _this.itemsInStage = [];
         _this.init();
         return _this;
     }
@@ -63,6 +64,7 @@ var GameScene = (function (_super) {
         // this.countTimeStart = egret.getTimer();
     };
     GameScene.prototype.countTime = function () {
+        var _this = this;
         // 倒计时
         if (GameController.getInstance().gameState == 1) {
             var now = egret.getTimer();
@@ -92,7 +94,7 @@ var GameScene = (function (_super) {
                 this.player_mc.x = this.targetX;
             }
             else {
-                //否则继续移动
+                //否则继续移动，每一帧都增加速度的距离
                 if (this.player_mc.x > this.player_mc.width) {
                     this.player_mc.x -= this.player_mc.speed;
                 }
@@ -110,46 +112,81 @@ var GameScene = (function (_super) {
             }
         }
         //限制走到屏幕两边就停止
+        // 如果 速度出现不一样  那么 有可能后扔的物品 先到地面  所以使用循环 遍历所有的 是否与玩家接触
+        // for() {
+        // }
+        if (this.itemsInStage.length > 0) {
+            if (this.player_mc.hitTestPoint(this.itemsInStage[0].x, this.itemsInStage[0].y)) {
+                console.log(this.itemsInStage[0].getType());
+                if (this.itemsInStage[0].getType() == 0) {
+                    console.log("die");
+                    //调用失败界面
+                    GameController.getInstance().gameOver();
+                }
+                else {
+                    console.log('得分');
+                    GameController.getInstance().addScore(this.itemsInStage[0].getScore());
+                    this.player_score.text = "得分" + GameController.getInstance().getPlayerScore() + "";
+                    var tip_1 = new egret.TextField();
+                    tip_1.text = "+" + this.itemsInStage[0].getScore() + "";
+                    tip_1.y = this.player_mc.y - tip_1.height;
+                    tip_1.x = this.player_mc.x - tip_1.width;
+                    tip_1.textColor = Colors.DARKORANGE;
+                    this.addChild(tip_1);
+                    egret.Tween.get(tip_1).to({ y: tip_1.y - 20, alpha: 0 }, 500).call(function () {
+                        if (_this.contains(tip_1)) {
+                            _this.removeChild(tip_1);
+                            tip_1 = null;
+                        }
+                    });
+                    if (this.contains(this.itemsInStage[0])) {
+                        this.removeChild(this.itemsInStage[0]);
+                        this.removeItem(this.itemsInStage[0]);
+                    }
+                }
+            }
+        }
+        // if (Math.abs(this.player_mc.x - item.x) < 50) { // 可配置的 任意值
+        //     //记分牌  得分
+        //     console.log(jewels_type);
+        //     if (jewels_type == 0) {
+        //         console.log("die");
+        //         //调用失败界面
+        //         GameController.getInstance().gameOver();
+        //     } else {
+        //         console.log('得分');
+        //         GameController.getInstance().addScore(item.getScore());
+        //         this.player_score.text = "得分" + GameController.getInstance().getPlayerScore() + "";
+        //         let tip = new egret.TextField();
+        //         tip.text = "+"+item.getScore()+"";
+        //         tip.y = this.player_mc.y-tip.height;
+        //         tip.x = this.player_mc.x-tip.width;
+        //         tip.textColor = Colors.DARKORANGE;
+        //         this.addChild(tip);
+        //         egret.Tween.get(tip).to({y:tip.y-20,alpha:0},500).call(()=>{
+        //             if(this.contains(tip)){
+        //                 this.removeChild(tip);
+        //                 tip = null;
+        //             }
+        //         });
+        //     }
+        // }
         // return this.count;
     };
     //珠宝显示在页面上
     GameScene.prototype.addJewels = function (jewels_type) {
         var _this = this;
         if (jewels_type === void 0) { jewels_type = JewelsType.BOMB; }
-        if (GameController.getInstance().gameState == 1) {
+        if (GameController.getInstance().gameState == GameState.GAME_PLAYING) {
             var item_1 = new Jewels(jewels_type);
             item_1.x = this.boss_mc.x;
             item_1.y = 100;
             this.addChild(item_1);
-            egret.Tween.get(item_1).to({ y: 800 }, 2000).call(function () {
-                if (Math.abs(_this.player_mc.x - item_1.x) < 50) {
-                    //记分牌  得分
-                    console.log(jewels_type);
-                    if (jewels_type == 0) {
-                        console.log("die");
-                        //调用失败界面
-                        GameController.getInstance().gameOver();
-                    }
-                    else {
-                        console.log('得分');
-                        GameController.getInstance().addScore(item_1.getScore());
-                        _this.player_score.text = "得分" + GameController.getInstance().getPlayerScore() + "";
-                        var tip_1 = new egret.TextField();
-                        tip_1.text = "+" + item_1.getScore() + "";
-                        tip_1.y = _this.player_mc.y - tip_1.height;
-                        tip_1.x = _this.player_mc.x - tip_1.width;
-                        tip_1.textColor = Colors.DARKORANGE;
-                        _this.addChild(tip_1);
-                        egret.Tween.get(tip_1).to({ y: tip_1.y - 20, alpha: 0 }, 500).call(function () {
-                            if (_this.contains(tip_1)) {
-                                _this.removeChild(tip_1);
-                                tip_1 = null;
-                            }
-                        });
-                    }
-                }
+            this.itemsInStage.push(item_1);
+            egret.Tween.get(item_1).to({ y: 850 }, 2000).call(function () {
                 if (_this.contains(item_1)) {
                     _this.removeChild(item_1);
+                    _this.removeItem(item_1);
                 }
             });
         }
@@ -158,7 +195,6 @@ var GameScene = (function (_super) {
     GameScene.prototype.resetGame = function () {
         this.countTimeStart = egret.getTimer();
         this.player_score.text = "得分" + GameController.getInstance().getPlayerScore() + "";
-        this.boss_mc.x = 0;
         this.player_mc.x = egret.MainContext.instance.stage.stageWidth / 2;
         this.boss_mc.run();
         this.player_mc.run();
@@ -166,6 +202,16 @@ var GameScene = (function (_super) {
         console.log("this.resetgame");
         //在开始时添加侦听事件
         this.addEventListener(egret.TouchEvent.ENTER_FRAME, this.countTime, this);
+        this.clearItems();
+    };
+    GameScene.prototype.clearItems = function () {
+        for (var i = 0; i < this.itemsInStage.length; i++) {
+            if (this.contains(this.itemsInStage[i])) {
+                this.removeChild(this.itemsInStage[i]);
+                this.itemsInStage[i] = null;
+            }
+        }
+        this.itemsInStage = [];
     };
     GameScene.prototype.gameOverStop = function () {
         console.log("this.gameover");
@@ -191,6 +237,12 @@ var GameScene = (function (_super) {
     //触摸暂停时事件
     GameScene.prototype.onTouchStop = function (evt) {
         egret.Tween.pauseTweens(evt.target);
+    };
+    GameScene.prototype.removeItem = function (item) {
+        var index = this.itemsInStage.indexOf(item);
+        if (index !== -1) {
+            this.itemsInStage.splice(index, 1);
+        }
     };
     return GameScene;
 }(egret.Sprite));

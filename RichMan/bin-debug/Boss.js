@@ -13,6 +13,8 @@ var Boss = (function (_super) {
     __extends(Boss, _super);
     function Boss(type) {
         var _this = _super.call(this) || this;
+        // boss isLeft 向左
+        _this.isLeft = false;
         _this.last_throw_time = egret.getTimer();
         _this.type = type;
         _this.speed = 0.1 * type;
@@ -25,20 +27,20 @@ var Boss = (function (_super) {
         this.boss_mc.anchorOffsetX = this.boss_mc.width / 2; //設置縮放的錨點，變化更自然
         this.addChild(this.boss_mc);
         this.stage_width = egret.MainContext.instance.stage.stageWidth;
+        this.x = this.stage_width / 2;
         //给boss的每一帧设置一个侦听动画
         //boss的随机坐标
     };
     Boss.prototype.run = function () {
         this.boss_mc.play(-1);
-        this.boss_randomX = Math.random() * this.stage_width - 50;
-        this.boss_time = Math.abs(this.boss_randomX - this.x) / this.speed;
-        // console.log(this.boss_time);
-        //设置一个移动的动画
-        egret.Tween.get(this).to({ x: this.boss_randomX }, this.boss_time);
+        this.x = this.stage_width / 2;
+        this.isLeft = false;
+        this.boss_walk_to_new_place();
         this.addEventListener(egret.Event.ENTER_FRAME, this.enterFrame, this);
     };
     Boss.prototype.stop = function () {
         this.boss_mc.stop();
+        egret.Tween.removeTweens(this);
         this.removeEventListener(egret.Event.ENTER_FRAME, this.enterFrame, this);
     };
     Boss.prototype.enterFrame = function (e) {
@@ -46,9 +48,15 @@ var Boss = (function (_super) {
             return;
         }
         var now = egret.getTimer();
-        if (this.boss_randomX == this.x) {
+        if (this.x === this.target_position) {
             this.boss_walk_to_new_place();
         }
+        // if (this.x > this.target_position && this.isLeft === false ) {
+        //     this.boss_walk_to_new_place();
+        // }
+        // if (this.x < this.target_position && this.isLeft) {
+        //     this.boss_walk_to_new_place();
+        // }
         if (this.last_throw_time + 1000 <= now) {
             this.throwJewels();
         }
@@ -56,17 +64,19 @@ var Boss = (function (_super) {
     Boss.prototype.boss_walk_to_new_place = function () {
         // console.log(this.x);
         //判断boss现在的位置和随机的坐标是否相等，相等则重新随机坐标，
-        this.last_randomX = this.boss_randomX;
-        this.boss_randomX = (Math.random() * this.stage_width - 50) > 0 ? Math.random() * this.stage_width - 50 : 10;
-        this.boss_time = Math.abs(this.boss_randomX - this.last_randomX) / this.speed;
-        if (this.boss_randomX < this.x) {
-            this.boss_mc.scaleX = -1;
-            egret.Tween.get(this).to({ x: this.boss_randomX }, this.boss_time);
+        this.last_position = this.x;
+        if (this.isLeft) {
+            this.target_position = this.stage_width * 3 / 4 + (Math.random() * this.stage_width / 4) - this.width;
+            this.boss_mc.scaleX = 1;
+            this.isLeft = false;
         }
         else {
-            this.boss_mc.scaleX = 1;
-            egret.Tween.get(this).to({ x: this.boss_randomX }, this.boss_time);
+            this.target_position = (Math.random() * this.stage_width / 4) + this.width;
+            this.boss_mc.scaleX = -1;
+            this.isLeft = true;
         }
+        var boss_time = Math.abs(this.target_position - this.last_position) / this.speed;
+        egret.Tween.get(this).to({ x: this.target_position }, boss_time);
     };
     Boss.prototype.throwJewels = function () {
         this.last_throw_time = egret.getTimer();

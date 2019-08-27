@@ -59,6 +59,9 @@ var Jewels = (function (_super) {
     Jewels.prototype.getScore = function () {
         return this.score;
     };
+    Jewels.prototype.getType = function () {
+        return this.type;
+    };
     return Jewels;
 }(egret.Sprite));
 __reflect(Jewels.prototype, "Jewels");

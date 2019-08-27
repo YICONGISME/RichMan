@@ -59,4 +59,8 @@ class Jewels extends egret.Sprite {
         return this.score;
     }
 
+    public getType() {
+        return this.type;
+    }
+
 }

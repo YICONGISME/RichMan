@@ -19,8 +19,10 @@ class StartScene extends egret.Sprite {
         this.start_bg = new egret.Bitmap();
         this.start_bg.texture = RES.getRes("bg_png");
         // this.start_bg.fillMode = egret.BitmapFillMode.CLIP;
-        this.start_bg.width = egret.MainContext.instance.stage.stageWidth;
-        this.start_bg.height = egret.MainContext.instance.stage.stageHeight;
+
+        this.start_bg.scaleX = egret.MainContext.instance.stage.stageWidth / this.start_bg.width;
+        this.start_bg.scaleY = egret.MainContext.instance.stage.stageWidth / this.start_bg.width;
+        this.start_bg.y = egret.MainContext.instance.stage.stageHeight / 4;
         this.addChild(this.start_bg);
 
         //开始游戏文本

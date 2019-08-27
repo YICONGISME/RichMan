@@ -1,5 +1,5 @@
 class Common {
-    
+
     public static buildTypeMc(type_json, type_data, type_mc_data) {
         let type_json_res = RES.getRes(type_json);
         let type_data_res = RES.getRes(type_data);
