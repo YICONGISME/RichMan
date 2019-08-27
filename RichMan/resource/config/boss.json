@@ -1,0 +1,22 @@
+{
+    "boss": [
+        {
+            "boss": 1,
+            "name": "zbr",
+            "speed": 0.1,
+            "throwSpeed": 800
+        },
+        {
+            "boss": 2,
+            "name": "caiwei",
+            "speed": 0.2,
+            "throwSpeed": 1000
+        },
+        {
+            "boss": 3,
+            "name": "fangzikai",
+            "speed": 0.3,
+            "throwSpeed": 1200
+        }
+    ]
+}

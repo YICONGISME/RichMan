@@ -58,7 +58,7 @@ class Boss extends egret.Sprite {
 
         let now = egret.getTimer();
 
-    
+
         if (this.x === this.target_position) {
             this.boss_walk_to_new_place();
         }
@@ -87,7 +87,7 @@ class Boss extends egret.Sprite {
             this.target_position = (Math.random() * this.stage_width / 4) + this.width;
             this.boss_mc.scaleX = -1;
             this.isLeft = true;
-           
+
         }
         let boss_time = Math.abs(this.target_position - this.last_position) / this.speed;
         egret.Tween.get(this).to({ x: this.target_position }, boss_time);
@@ -97,9 +97,21 @@ class Boss extends egret.Sprite {
 
     private throwJewels() {
         this.last_throw_time = egret.getTimer();
-        let random_jewel = Math.floor(Math.random() * JewelsType.COUNT);
+        let current_stage_data = DataManager.getInstance().getStageById(2);
+
+        let random = Math.floor(Math.random() * 100);
+        let type = 0;
+        for (let i = 0; i < 4; i++) {
+            if (random > current_stage_data["item" + i]) {
+                random = random - current_stage_data["item" + i]
+            } else {
+                type = i;
+                break;
+            }
+        }
+
         // console.log("jewel type" + random_jewel);
-        SceneManager.getInstance().getGameScene().addJewels(random_jewel);
+        SceneManager.getInstance().getGameScene().addJewels(type);
     }
 
     // public reset() {

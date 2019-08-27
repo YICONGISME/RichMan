@@ -215,7 +215,7 @@ class GameScene extends egret.Sprite {
             item.y = 100;
             this.addChild(item);
             this.itemsInStage.push(item);
-            egret.Tween.get(item).to({ y: 850 }, 2000).call(() => {
+            egret.Tween.get(item).to({ y: 850 }, (750 / item.getSpeed() * 1000)).call(() => {
                 if (this.contains(item)) {
                     this.removeChild(item);
                     this.removeItem(item);

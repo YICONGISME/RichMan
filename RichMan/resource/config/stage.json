@@ -1,0 +1,44 @@
+{
+    "stage": [
+        {
+            "stageId": 1,
+            "item0": 0,
+            "item1": 70,
+            "item2": 30,
+            "item3": 0,
+            "boos": 1,
+            "playerSpeed": 10,
+            "pass": 100
+        },
+        {
+            "stageId": 2,
+            "item0": 30,
+            "item1": 50,
+            "item2": 20,
+            "item3": 0,
+            "boos": 2,
+            "playerSpeed": 9,
+            "pass": 120
+        },
+        {
+            "stageId": 3,
+            "item0": 30,
+            "item1": 40,
+            "item2": 20,
+            "item3": 10,
+            "boos": 3,
+            "playerSpeed": 8,
+            "pass": 150
+        },
+        {
+            "stageId": 4,
+            "item0": 50,
+            "item1": 20,
+            "item2": 15,
+            "item3": 15,
+            "boos": 3,
+            "playerSpeed": 7,
+            "pass": 200
+        }
+    ]
+}

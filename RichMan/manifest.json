@@ -23,6 +23,7 @@
 		"bin-debug/enum/JewelsType.js",
 		"bin-debug/enum/Language.js",
 		"bin-debug/enum/PlayerType.js",
+		"bin-debug/model/DataManager.js",
 		"bin-debug/scene/FailScene.js",
 		"bin-debug/scene/GameEndScene.js",
 		"bin-debug/scene/GameScene.js",

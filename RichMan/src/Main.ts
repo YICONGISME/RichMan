@@ -78,6 +78,7 @@ class Main extends egret.DisplayObjectContainer {
             this.stage.addChild(loadingView);
             await RES.loadConfig("resource/default.res.json", "resource/");
             await RES.loadGroup("preload", 0, loadingView);
+            await RES.loadGroup("config");
             this.stage.removeChild(loadingView);
         }
         catch (e) {
@@ -93,6 +94,12 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene() {
+
+        DataManager.getInstance().initData();
+
+        console.log(DataManager.getInstance().getBossDataById(3));
+        console.log(DataManager.getInstance().getJewelById(2));
+        console.log(DataManager.getInstance().getStageById(1));
         //只需把管理器容器添加到舞台上来，调用所需的场景方法即可
         this.addChild(SceneManager.getInstance());
         GameController.getInstance().gameBefore();

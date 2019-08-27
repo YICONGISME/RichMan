@@ -13,8 +13,8 @@ class Jewels extends egret.Sprite {
     constructor(type) {
         super();
         //分值和速度根据类型确定
-        this.speed = 10 * type;
-        this.score = JewelsType.getScoreByJewelsType(type);
+        this.speed = DataManager.getInstance().getSpeedByJewelsType(type);;
+        this.score = DataManager.getInstance().getScoreByJewelsType(type);
         this.type = type;
 
         this.init();
@@ -54,13 +54,17 @@ class Jewels extends egret.Sprite {
 
         egret.Tween.get(this, { loop: true }).to({ rotation: 360 }, 3000)
     }
-    
-    public getScore(){
+
+    public getScore() {
         return this.score;
     }
 
     public getType() {
         return this.type;
+    }
+
+    public getSpeed() {
+        return this.speed;
     }
 
 }

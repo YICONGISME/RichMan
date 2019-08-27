@@ -1,0 +1,32 @@
+{
+    "jewel": [
+        {
+            "itemId": 0,
+            "name": "炸弹",
+            "speed": 600,
+            "score": 0,
+            "special": 2
+        },
+        {
+            "itemId": 1,
+            "name": "金币",
+            "speed": 450,
+            "score": 10,
+            "special": 1
+        },
+        {
+            "itemId": 2,
+            "name": "元宝",
+            "speed": 550,
+            "score": 20,
+            "special": 1
+        },
+        {
+            "itemId": 3,
+            "name": "宝箱",
+            "speed": 650,
+            "score": 40,
+            "special": 1
+        }
+    ]
+}
